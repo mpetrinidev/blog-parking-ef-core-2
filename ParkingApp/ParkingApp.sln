@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingApp.Data", "ParkingA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingApp.Domain", "ParkingApp.Domain\ParkingApp.Domain.csproj", "{0A60BB37-89C2-43B7-9F01-43FC8BEDAE7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingApp.UI", "ParkingApp.UI\ParkingApp.UI.csproj", "{4B0807D5-AF66-45C2-BB7A-2492665EF614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0A60BB37-89C2-43B7-9F01-43FC8BEDAE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A60BB37-89C2-43B7-9F01-43FC8BEDAE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A60BB37-89C2-43B7-9F01-43FC8BEDAE7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B0807D5-AF66-45C2-BB7A-2492665EF614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B0807D5-AF66-45C2-BB7A-2492665EF614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B0807D5-AF66-45C2-BB7A-2492665EF614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B0807D5-AF66-45C2-BB7A-2492665EF614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
