@@ -1,10 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using ParkingApp.Domain;
 
 namespace ParkingApp.Data
 {
     public class ParkingContext : DbContext
     {
+        public static readonly LoggerFactory loggerFactory =
+            new LoggerFactory(new[] {
+                new ConsoleLoggerProvider((c, l) => 
+                    c == DbLoggerCategory.Database.Command.Name && l == LogLevel.Information, true)
+            });
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Parking> Parkings { get; set; }
@@ -18,6 +26,7 @@ namespace ParkingApp.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
+                .UseLoggerFactory(loggerFactory)
                 .UseSqlServer(@"");
         }
     }

@@ -1,12 +1,18 @@
-﻿using System;
+﻿using ParkingApp.Data;
+using System;
+using System.Linq;
 
 namespace ParkingApp.UI
 {
     class Program
     {
+        private static ParkingContext _context = new ParkingContext();
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            _context.Categories.ToList().ForEach(p => Console.WriteLine(p.Name));
+
+            Console.ReadLine();
         }
     }
 }
