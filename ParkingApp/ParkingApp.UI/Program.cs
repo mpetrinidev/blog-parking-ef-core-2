@@ -1,4 +1,5 @@
-﻿using ParkingApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ParkingApp.Data;
 using ParkingApp.Domain;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,21 @@ namespace ParkingApp.UI
 
         static void Main(string[] args)
         {
-            InsertCategories();
-            InsertMultipleVehicles();
-            InsertParking();
+            //InsertCategories();
+            //InsertMultipleVehicles();
+            //InsertParking();
+
+            var categories = _context.Categories.ToList();
+            categories.ForEach(p => Console.WriteLine(p.Name));
+
+            var vehiclesFilter = _context.Vehicles.Where(p => p.LicensePlate == "NJS981");
+            var oneVehiclesFilter = _context.Vehicles.FirstOrDefault(p => p.LicensePlate == "NJS981");
+            var findVehicle = _context.Vehicles.Find(1);
+            var likeVehicle = _context.Vehicles.Where(p => EF.Functions.Like(p.LicensePlate, ""));
+
+            //LastOrDefault
+            var lastVehicle = _context.Vehicles.LastOrDefault(p => p.LicensePlate == "NJS981");
+            var lastVehicleCorrect = _context.Vehicles.OrderBy(p => p.Id).LastOrDefault(p1 => p1.LicensePlate == "NJS981");
 
             Console.ReadLine();
         }
