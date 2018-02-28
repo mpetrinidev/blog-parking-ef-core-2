@@ -27,7 +27,8 @@ namespace ParkingApp.Data
         {
             optionsBuilder
                 .UseLoggerFactory(loggerFactory)
-                .UseSqlServer(@"");
+                .EnableSensitiveDataLogging(true)
+                .UseSqlServer(@"data source=.\SQLEXPRESS02;initial catalog=ParkingDB;integrated security=true;");
         }
     }
 }
