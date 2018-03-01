@@ -23,7 +23,7 @@ namespace ParkingApp.UI
             var vehiclesFilter = _context.Vehicles.Where(p => p.LicensePlate == "NJS981");
             var oneVehiclesFilter = _context.Vehicles.FirstOrDefault(p => p.LicensePlate == "NJS981");
             var findVehicle = _context.Vehicles.Find(1);
-            var likeVehicle = _context.Vehicles.Where(p => EF.Functions.Like(p.LicensePlate, ""));
+            var likeVehicle = _context.Vehicles.Where(p => EF.Functions.Like(p.LicensePlate, "%9%")).ToList();
 
             //LastOrDefault
             var lastVehicle = _context.Vehicles.LastOrDefault(p => p.LicensePlate == "NJS981");
