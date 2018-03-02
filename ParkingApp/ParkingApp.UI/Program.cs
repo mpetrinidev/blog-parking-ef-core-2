@@ -13,23 +13,43 @@ namespace ParkingApp.UI
 
         static void Main(string[] args)
         {
+            #region "inserts"
+
             //InsertCategories();
             //InsertMultipleVehicles();
             //InsertParking();
 
-            var categories = _context.Categories.ToList();
-            categories.ForEach(p => Console.WriteLine(p.Name));
+            #endregion
 
-            var oneVehicles = _context.Vehicles.FirstOrDefault(p => p.LicensePlate == "NJS981");
-            var findVehicle = _context.Vehicles.Find(1);
-            var likeVehicle = _context.Vehicles.Where(p => EF.Functions.Like(p.LicensePlate, "%9%")).ToList();
+            #region "queries-filters"
 
-            //LastOrDefault
-            var lastVehicle = _context.Vehicles.LastOrDefault(p => p.LicensePlate == "NJS981");
-            var lastVehicleCorrect = _context.Vehicles.OrderBy(p => p.Id).LastOrDefault(p1 => p1.LicensePlate == "NJS981");
+            //var categories = _context.Categories.ToList();
+            //categories.ForEach(p => Console.WriteLine(p.Name));
+
+            //var oneVehicles = _context.Vehicles.FirstOrDefault(p => p.LicensePlate == "NJS981");
+            //var findVehicle = _context.Vehicles.Find(1);
+            //var likeVehicle = _context.Vehicles.Where(p => EF.Functions.Like(p.LicensePlate, "%9%")).ToList();
+
+            //var lastVehicle = _context.Vehicles.LastOrDefault(p => p.LicensePlate == "NJS981");
+            //var lastVehicleCorrect = _context.Vehicles.OrderBy(p => p.Id).LastOrDefault(p1 => p1.LicensePlate == "NJS981");
+
+            #endregion
+
+            #region "update - delete"
+
+            //UpdateParking();
+            //MultipleUpdates();
+            //UpdateParkingAnotherInstance();
+
+            //DeleteParking();
+            //MultipleDeletes();
+
+            #endregion
 
             Console.ReadLine();
         }
+
+        #region "insert methods"
 
         private static void InsertMultipleVehicles()
         {
@@ -81,5 +101,69 @@ namespace ParkingApp.UI
             _context.Add(newParking);
             _context.SaveChanges();
         }
+
+        #endregion
+
+        #region "update methods"
+
+        private static void UpdateParking()
+        {
+            var existingParking = _context.Parkings.Find(1);
+            if (existingParking == null) return;
+
+            existingParking.CheckOut = DateTime.Now;
+
+            _context.SaveChanges();
+        }
+
+        private static void MultipleUpdates()
+        {
+            var categories = _context.Categories.ToList();
+            if (categories == null || categories.Count == 0) return;
+
+            var i = 0;
+            categories.ForEach(p => p.Name += " " + i++);
+
+            _context.SaveChanges();
+        }
+
+        private static void UpdateParkingAnotherInstance()
+        {
+            var existingParking = _context.Parkings.Find(1);
+            if (existingParking == null) return;
+
+            existingParking.CheckOut = DateTime.Now;
+
+            using (var newContext = new ParkingContext())
+            {
+                newContext.Parkings.Update(existingParking);
+                newContext.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region "delete methods"
+
+        private static void DeleteParking()
+        {
+            var existingParking = _context.Parkings.Find(1);
+            if (existingParking == null) return;
+
+            _context.Parkings.Remove(existingParking);
+            _context.SaveChanges();
+        }
+
+        private static void MultipleDeletes()
+        {
+            var vehicles = _context.Vehicles.ToList();
+            if (vehicles.Count == 0) return;
+
+            _context.Vehicles.RemoveRange(vehicles);
+            _context.SaveChanges();
+        }
+
+        #endregion
+
     }
 }
