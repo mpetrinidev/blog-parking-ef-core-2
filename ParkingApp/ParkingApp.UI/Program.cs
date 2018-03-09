@@ -46,6 +46,15 @@ namespace ParkingApp.UI
 
             #endregion
 
+            #region "insert related"
+
+            //InsertRelatedVehicles();
+            //InsertRelatedVehicleMultipleParkings();
+            //InsertRelatedVehicleAnotherInstanceWithError(); //this code throw exception
+            //InsertRelatedVehicleAnotherInstance(1);
+
+            #endregion
+
             Console.ReadLine();
         }
 
@@ -165,5 +174,89 @@ namespace ParkingApp.UI
 
         #endregion
 
+        #region related"
+
+        private static void InsertRelatedVehicles()
+        {
+            var vehicle = new Vehicle
+            {
+                CateogoryId = 1,
+                LicensePlate = "JNS543",
+                Parkings = new List<Parking>
+                {
+                    new Parking
+                    {
+                        Ticket = "9485637483",
+                        CheckIn = DateTime.Now
+                    }
+                }
+            };
+
+            _context.Add(vehicle);
+            _context.SaveChanges();
+        }
+
+        private static void InsertRelatedVehicleMultipleParkings()
+        {
+            var vehicle = new Vehicle
+            {
+                CateogoryId = 1,
+                LicensePlate = "ABC543",
+                Parkings = new List<Parking>
+                {
+                    new Parking
+                    {
+                        Ticket = "9481637483",
+                        CheckIn = DateTime.Now
+                    },
+                    new Parking
+                    {
+                        Ticket = "9481639183",
+                        CheckIn = DateTime.Now
+                    }
+                }
+            };
+
+            _context.Add(vehicle);
+            _context.SaveChanges();
+        }
+
+        private static void InsertRelatedVehicleAnotherInstanceWithError()
+        {
+            var vehicle = _context.Vehicles.Include(p => p.Parkings)
+                                           .FirstOrDefault(p => p.Id == 1);
+
+            vehicle?.Parkings.Add(new Parking
+            {
+                Ticket = "6574837564",
+                CheckIn = DateTime.Now
+            });
+
+            //another context
+            using (var ctx = new ParkingContext())
+            {
+                ctx.Vehicles.Add(vehicle);
+                ctx.SaveChanges();
+            }
+        }
+
+        private static void InsertRelatedVehicleAnotherInstance(int vehicleId)
+        {
+            var parking = new Parking
+            {
+                Ticket = "6574837564",
+                CheckIn = DateTime.Now,
+                VehicleId = vehicleId
+            };
+
+            //another context
+            using (var ctx = new ParkingContext())
+            {
+                ctx.Parkings.Add(parking);
+                ctx.SaveChanges();
+            }
+        }
+
+        #endregion
     }
 }
