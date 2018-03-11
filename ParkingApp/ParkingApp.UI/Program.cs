@@ -55,6 +55,10 @@ namespace ParkingApp.UI
 
             #endregion
 
+            //GetVehiclesWithParkingsInclude();
+            //GetVehiclesWithParkingsSelect();
+            GetVehiclesFilterParkings();
+
             Console.ReadLine();
         }
 
@@ -255,6 +259,39 @@ namespace ParkingApp.UI
                 ctx.Parkings.Add(parking);
                 ctx.SaveChanges();
             }
+        }
+
+        #endregion
+
+        #region "query related data"
+
+        private static void GetVehiclesWithParkingsInclude()
+        {
+            //var vehicles = _context.Vehicles.Include(p => p.Parkings).ToList();
+
+            var vehicle = _context.Vehicles.Where(p => p.LicensePlate == "NJS981")
+                                            .Include(p => p.Parkings)
+                                            .FirstOrDefault();
+        }
+
+        private static void GetVehiclesWithParkingsSelect()
+        {
+            var vehiclesAnonymous = _context.Vehicles.Select(p => new
+            {
+                p.Id,
+                p.LicensePlate,
+                p.Parkings.Count
+            }).ToList();
+        }
+
+        private static void GetVehiclesFilterParkings()
+        {
+            var startDate = DateTime.Today.AddDays(-4);
+            var endDay = DateTime.Today;
+
+            var vehicles = _context.Vehicles
+                                    .Where(p => p.Parkings.Any(x => x.CheckIn >= startDate && x.CheckIn <= endDay))
+                                    .ToList();
         }
 
         #endregion
