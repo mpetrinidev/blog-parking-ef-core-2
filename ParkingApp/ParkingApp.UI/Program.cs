@@ -57,7 +57,13 @@ namespace ParkingApp.UI
 
             //GetVehiclesWithParkingsInclude();
             //GetVehiclesWithParkingsSelect();
-            GetVehiclesFilterParkings();
+            //GetVehiclesFilterParkings();
+
+            //UpdateCheckoutParking();
+            //UpdateCheckoutParkingAnotherInstance();
+
+            //DeleteRelatedParking();
+            DeleteRelatedParkingAnotherInstance();
 
             Console.ReadLine();
         }
@@ -292,6 +298,65 @@ namespace ParkingApp.UI
             var vehicles = _context.Vehicles
                                     .Where(p => p.Parkings.Any(x => x.CheckIn >= startDate && x.CheckIn <= endDay))
                                     .ToList();
+        }
+
+        #endregion
+
+        #region "update and delete related data"
+
+        private static void UpdateCheckoutParking()
+        {
+            var firstVehicle = _context.Vehicles
+                                        .Include(p => p.Parkings)
+                                        .FirstOrDefault();
+
+            var lastParking = firstVehicle.Parkings.LastOrDefault();
+            lastParking.CheckOut = DateTime.Now;
+
+            _context.SaveChanges();
+        }
+
+        private static void UpdateCheckoutParkingAnotherInstance()
+        {
+            var firstVehicle = _context.Vehicles
+                                        .Include(p => p.Parkings)
+                                        .FirstOrDefault();
+
+            var lastParking = firstVehicle.Parkings.LastOrDefault();
+            lastParking.CheckOut = DateTime.Now;
+
+            using (var newContext = new ParkingContext())
+            {
+                newContext.Entry(lastParking).State = EntityState.Modified;
+                newContext.SaveChanges();
+            }
+        }
+
+        private static void DeleteRelatedParking()
+        {
+            var firstVehicle = _context.Vehicles
+                                        .Include(p => p.Parkings)
+                                        .FirstOrDefault();
+
+            var lastParking = firstVehicle.Parkings.LastOrDefault();
+
+            _context.Parkings.Remove(lastParking);
+            _context.SaveChanges();
+        }
+
+        private static void DeleteRelatedParkingAnotherInstance()
+        {
+            var firstVehicle = _context.Vehicles
+                                        .Include(p => p.Parkings)
+                                        .FirstOrDefault();
+
+            var lastParking = firstVehicle.Parkings.LastOrDefault();
+
+            using (var newContext = new ParkingContext())
+            {
+                newContext.Entry(lastParking).State = EntityState.Deleted;
+                newContext.SaveChanges();
+            }
         }
 
         #endregion
