@@ -17,8 +17,3 @@ He creado una serie de artículos en [mi blog](https://www.petrinimauro.com) (8 
 
 
 >Sígueme en twitter [@mpetrinidev](https://www.twitter.com/mpetrinidev) para más novedades
-
-<div style="text-align:center"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/pp_logo_small.png" />
-
->[Si este proyecto te ha ayudado, puedes colaborar con una pequeña donación (el valor que desees) a través de este enlace de paypal.](https://www.paypal.me/mpetrinidev)
-</div>
